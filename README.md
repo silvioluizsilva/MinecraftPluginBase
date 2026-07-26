@@ -2,12 +2,12 @@
 
 Base Maven profissional e extensível para plugins Paper, criada por **Sílvio Luiz da Silva**.
 
-Entrega atual: **0.0.1-beta5**. A versão pública do plugin permanece **0.0.1**.
+Versão publicada: **0.0.1**. O nome do artefato é `pluginbase-0.0.1.jar`.
 
 ## Requisitos
 
 - Paper 26.2
-- JDK 25
+- JDK 25 ou 26 (compilação com `--release 25`)
 - Maven 3.9+
 - MySQL 8.0+ (opcional)
 
@@ -16,12 +16,12 @@ Entrega atual: **0.0.1-beta5**. A versão pública do plugin permanece **0.0.1**
 ## Compilação
 
 ```bash
-mvn clean package
+mvn clean verify
 ```
 
 O plugin compilado será criado em `target/pluginbase-0.0.1.jar`.
 
-Para alterar a versão usada na compilação, edite `java.version` no `pom.xml`. O servidor também precisa executar uma versão de Java compatível.
+O POM pai aceita JDK 25 e 26, mantendo os bytecodes compatíveis com Java 25. O servidor também precisa executar uma versão de Java compatível.
 
 ## Instalação
 
