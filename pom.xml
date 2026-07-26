@@ -31,7 +31,7 @@
     </developers>
 
     <properties>
-        <paper.version>26.2.build.65-beta</paper.version>
+        <paper.version>26.2.build.82-beta</paper.version>
         <hikaricp.version>7.0.2</hikaricp.version>
         <mysql.version>9.4.0</mysql.version>
         <slf4j.version>2.0.17</slf4j.version>
