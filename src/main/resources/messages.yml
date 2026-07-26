@@ -1,0 +1,2 @@
+# Arquivo legado de compatibilidade. As mensagens ativas ficam em languages/.
+language-file: languages/pt_BR.yml

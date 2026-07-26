@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Adicione exclusões somente quando documentar por que o alerta é um falso positivo. -->
+    <!-- O contexto é deliberadamente uma fachada de referências compartilhadas e imutáveis. -->
+    <Match>
+        <Class name="br.net.silvioluizsilva.pluginbase.bootstrap.DefaultPluginContext"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+</FindBugsFilter>

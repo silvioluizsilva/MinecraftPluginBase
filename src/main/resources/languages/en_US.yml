@@ -1,0 +1,33 @@
+prefix: "<gray>[<gold>PluginBase</gold>]</gray> "
+plugin:
+  enabled: "<green>Plugin enabled successfully.</green>"
+  disabled: "<yellow>Plugin disabled.</yellow>"
+command:
+  info: "<aqua>PluginBase</aqua> <gray>version</gray> <white>{version}</white>"
+  reloaded: "<green>Configuration reloaded.</green>"
+  reload-failed: "<red>Configuration rejected:</red> <gray>{reason}</gray>"
+  no-permission: "<red>You do not have permission to run this command.</red>"
+  internal-error: "<red>The command could not be completed. Check the console.</red>"
+  status:
+    general: "<green>Operational.</green> <gray>Uptime:</gray> <white>{uptime}s</white> <gray>Services:</gray> <white>{services}</white>"
+    database: "<gray>Database:</gray> <white>{state}</white>"
+    state:
+      connected: "connected"
+      disabled: "disabled"
+    services: "<gray>Registered services:</gray> <white>{count}</white>"
+    unknown: "<red>Unknown component:</red> <white>{component}</white>"
+  database:
+    health: "<gray>State:</gray> <white>{state}</white> <gray>Attempt:</gray> <white>{attempt}</white> <gray>Next:</gray> <white>{next}s</white> <gray>Unavailable:</gray> <white>{unavailable}s</white> <gray>Last connection:</gray> <white>{last-connected}</white> <gray>Last failure:</gray> <white>{last-failure}</white>"
+    reconnect-accepted: "<green>Immediate reconnection scheduled.</green>"
+    reconnect-rejected: "<yellow>Reconnection is unnecessary or already running.</yellow>"
+database:
+  state:
+    initializing: "initializing"
+    disabled: "disabled"
+    connecting: "connecting"
+    connected: "connected"
+    degraded: "degraded"
+    reconnecting: "reconnecting"
+    failed: "failed"
+    stopping: "stopping"
+    stopped: "stopped"

@@ -1,0 +1,48 @@
+# Idioma padrão. Deve corresponder a um arquivo em languages/.
+language: pt_BR
+
+database:
+  # O plugin inicia normalmente sem banco quando desativado.
+  enabled: false
+  host: 127.0.0.1
+  port: 3306
+  name: pluginbase
+  username: pluginbase
+  password: change-me
+  parameters: useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+  degraded-mode: true
+  health-check:
+    interval-seconds: 30
+    timeout-seconds: 3
+  reconnect:
+    initial-delay-seconds: 60
+    increment-seconds: 60
+    maximum-delay-seconds: 900
+    jitter-percent: 20
+  transactions:
+    # Aplicado a cada instrução JDBC; a thread nunca é encerrada à força.
+    statement-timeout-seconds: 30
+    slow-warning-ms: 1000
+    critical-warning-ms: 5000
+    maximum-concurrent-per-consumer: 2
+    concurrency-wait-ms: 2000
+  pool:
+    maximum-size: 10
+    minimum-idle: 2
+    connection-timeout-ms: 10000
+
+logging:
+  debug: false
+  # Em produção, mantenha desativado para reduzir exposição de detalhes internos.
+  include-stack-traces: false
+
+web:
+  # Esta versão apenas valida contratos; nenhum servidor HTTP é iniciado.
+  enabled: false
+  bind-address: 127.0.0.1
+  port: 8080
+  allowed-origins: []
+  maximum-request-body-bytes: 65536
+  authentication:
+    # Informe somente o hash SHA-256 hexadecimal; nunca armazene o token em texto puro.
+    token-sha256: ''

@@ -1,0 +1,33 @@
+prefix: "<gray>[<gold>PluginBase</gold>]</gray> "
+plugin:
+  enabled: "<green>Plugin habilitado com sucesso.</green>"
+  disabled: "<yellow>Plugin desabilitado.</yellow>"
+command:
+  info: "<aqua>PluginBase</aqua> <gray>versão</gray> <white>{version}</white>"
+  reloaded: "<green>Configurações recarregadas.</green>"
+  reload-failed: "<red>Configuração rejeitada:</red> <gray>{reason}</gray>"
+  no-permission: "<red>Você não possui permissão para executar este comando.</red>"
+  internal-error: "<red>Não foi possível concluir o comando. Consulte o console.</red>"
+  status:
+    general: "<green>Operacional.</green> <gray>Tempo ativo:</gray> <white>{uptime}s</white> <gray>Serviços:</gray> <white>{services}</white>"
+    database: "<gray>Banco de dados:</gray> <white>{state}</white>"
+    state:
+      connected: "conectado"
+      disabled: "desativado"
+    services: "<gray>Serviços registrados:</gray> <white>{count}</white>"
+    unknown: "<red>Componente desconhecido:</red> <white>{component}</white>"
+  database:
+    health: "<gray>Estado:</gray> <white>{state}</white> <gray>Tentativa:</gray> <white>{attempt}</white> <gray>Próxima:</gray> <white>{next}s</white> <gray>Indisponível:</gray> <white>{unavailable}s</white> <gray>Última conexão:</gray> <white>{last-connected}</white> <gray>Última falha:</gray> <white>{last-failure}</white>"
+    reconnect-accepted: "<green>Reconexão imediata agendada.</green>"
+    reconnect-rejected: "<yellow>A reconexão não é necessária ou já está em andamento.</yellow>"
+database:
+  state:
+    initializing: "inicializando"
+    disabled: "desativado"
+    connecting: "conectando"
+    connected: "conectado"
+    degraded: "degradado"
+    reconnecting: "reconectando"
+    failed: "falhou"
+    stopping: "encerrando"
+    stopped: "encerrado"

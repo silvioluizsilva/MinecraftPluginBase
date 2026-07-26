@@ -1,0 +1,30 @@
+name: PluginBase
+version: '${project.version}'
+main: br.net.silvioluizsilva.pluginbase.PluginBase
+description: Base profissional para desenvolvimento de plugins Paper.
+author: "Sílvio Luiz da Silva"
+website: https://github.com/silvioluizsilva
+api-version: '26.2'
+folia-supported: false
+
+permissions:
+  pluginbase.admin:
+    description: Concede acesso administrativo ao PluginBase.
+    default: op
+    children:
+      pluginbase.command.reload: true
+      pluginbase.command.status: true
+      pluginbase.command.database.health: true
+      pluginbase.command.database.reconnect: true
+  pluginbase.command.reload:
+    description: Permite recarregar as configurações do PluginBase.
+    default: op
+  pluginbase.command.status:
+    description: Permite consultar o estado operacional detalhado do PluginBase.
+    default: op
+  pluginbase.command.database.health:
+    description: Permite consultar a saúde do banco de dados.
+    default: op
+  pluginbase.command.database.reconnect:
+    description: Permite solicitar uma reconexão imediata.
+    default: op

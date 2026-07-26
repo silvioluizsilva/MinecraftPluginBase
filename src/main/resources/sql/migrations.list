@@ -1,0 +1,2 @@
+# version|description|resource
+1|Initial plugin settings|sql/001_initial.sql
