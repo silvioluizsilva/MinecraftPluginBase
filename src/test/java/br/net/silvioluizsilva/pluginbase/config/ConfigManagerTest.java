@@ -1,12 +1,16 @@
 package br.net.silvioluizsilva.pluginbase.config;
 
 import br.net.silvioluizsilva.pluginbase.exception.ConfigurationException;
+import br.net.silvioluizsilva.pluginbase.PluginBase;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Verifica a leitura e a validação da configuração tipada.
@@ -45,6 +49,22 @@ final class ConfigManagerTest {
         yaml.set("database.pool.minimum-idle", 11);
 
         assertThrows(ConfigurationException.class, () -> ConfigManager.parse(yaml));
+    }
+
+    @Test
+    void shouldRestoreBukkitConfigurationAfterInvalidReload() {
+        YamlConfiguration previous = validConfiguration();
+        YamlConfiguration invalid = validConfiguration();
+        invalid.set("database.pool.minimum-idle", 11);
+        PluginBase plugin = mock(PluginBase.class);
+        when(plugin.getConfig()).thenReturn(previous, invalid, invalid);
+        doNothing().when(plugin).reloadConfig();
+        ConfigManager manager = new ConfigManager(plugin);
+
+        assertThrows(ConfigurationException.class, manager::reloadCandidate);
+
+        assertEquals(2, invalid.getInt("database.pool.minimum-idle"));
+        assertEquals("pt_BR", invalid.getString("language"));
     }
 
     private static YamlConfiguration validConfiguration() {
