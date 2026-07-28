@@ -2,6 +2,7 @@ package br.net.silvioluizsilva.pluginbase.config;
 
 import br.net.silvioluizsilva.pluginbase.PluginBase;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.Objects;
 
@@ -50,8 +51,14 @@ public final class ConfigManager {
      * @return configuração candidata validada
      */
     public PluginConfig reloadCandidate() {
-        plugin.reloadConfig();
-        return parse(plugin.getConfig());
+        YamlConfiguration previousBukkit = snapshot(plugin.getConfig());
+        try {
+            plugin.reloadConfig();
+            return parse(plugin.getConfig());
+        } catch (RuntimeException exception) {
+            restore(plugin.getConfig(), previousBukkit);
+            throw exception;
+        }
     }
 
     /**
@@ -137,5 +144,24 @@ public final class ConfigManager {
 
     private static String stringValue(FileConfiguration source, String path, String defaultValue) {
         return Objects.requireNonNullElse(source.getString(path, defaultValue), defaultValue);
+    }
+
+    private static YamlConfiguration snapshot(FileConfiguration source) {
+        YamlConfiguration snapshot = new YamlConfiguration();
+        source.getKeys(true).forEach(key -> {
+            if (!source.isConfigurationSection(key)) {
+                snapshot.set(key, source.get(key));
+            }
+        });
+        return snapshot;
+    }
+
+    private static void restore(FileConfiguration target, FileConfiguration previous) {
+        target.getKeys(false).forEach(key -> target.set(key, null));
+        previous.getKeys(true).forEach(key -> {
+            if (!previous.isConfigurationSection(key)) {
+                target.set(key, previous.get(key));
+            }
+        });
     }
 }

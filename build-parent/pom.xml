@@ -29,6 +29,7 @@
         <checkstyle.version>13.8.0</checkstyle.version>
         <spotbugs.version>4.10.3.0</spotbugs.version>
         <jacoco.version>0.8.15</jacoco.version>
+        <dependency.check.version>12.1.0</dependency.check.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.outputTimestamp>2026-07-22T00:00:00Z</project.build.outputTimestamp>
@@ -169,6 +170,28 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency.check.version}</version>
+                <configuration>
+                    <failBuildOnCVSS>7</failBuildOnCVSS>
+                    <failBuildOnUnusedSuppressionRule>true</failBuildOnUnusedSuppressionRule>
+                    <skipProvidedScope>true</skipProvidedScope>
+                    <nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
+                    <ossindexAnalyzerEnabled>false</ossindexAnalyzerEnabled>
+                    <formats>
+                        <format>HTML</format>
+                        <format>JSON</format>
+                    </formats>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>dependency-vulnerability-check</id>
+                        <phase>verify</phase>
+                        <goals><goal>check</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>        </plugins>
     </build>
 </project>

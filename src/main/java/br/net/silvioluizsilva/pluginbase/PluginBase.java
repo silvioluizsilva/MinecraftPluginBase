@@ -22,7 +22,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
  * @author Sílvio Luiz da Silva
  * @version 0.0.1
  */
-public final class PluginBase extends JavaPlugin {
+public class PluginBase extends JavaPlugin {
 
     private LanguageManager languageManager;
     private DatabaseManager databaseManager;

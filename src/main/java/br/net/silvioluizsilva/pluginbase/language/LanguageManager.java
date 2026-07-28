@@ -1,6 +1,7 @@
 package br.net.silvioluizsilva.pluginbase.language;
 
 import br.net.silvioluizsilva.pluginbase.PluginBase;
+import br.net.silvioluizsilva.pluginbase.exception.ConfigurationException;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -8,6 +9,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -49,7 +54,12 @@ public final class LanguageManager {
             plugin.getPluginLogger().warn("Idioma '{}' não encontrado; usando pt_BR.", locale);
             languageFile = new File(plugin.getDataFolder(), "languages/pt_BR.yml");
         }
-        return YamlConfiguration.loadConfiguration(languageFile);
+        YamlConfiguration candidate = loadStrict(languageFile);
+        if (!"pt_BR".equals(locale)) {
+            YamlConfiguration fallback = loadStrict(new File(plugin.getDataFolder(), "languages/pt_BR.yml"));
+            applyFallback(candidate, fallback);
+        }
+        return candidate;
     }
 
     /**
@@ -106,5 +116,32 @@ public final class LanguageManager {
 
     private static String normalizeTemplate(String template) {
         return template.replaceAll("\\{([a-zA-Z0-9_-]+)}", "<$1>");
+    }
+
+    static YamlConfiguration loadStrict(File file) {
+        try {
+            String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+            if (content.isBlank()) {
+                throw new ConfigurationException("O catálogo de idioma " + file.getName() + " está vazio.");
+            }
+            YamlConfiguration yaml = new YamlConfiguration();
+            yaml.loadFromString(content);
+            if (yaml.getKeys(true).isEmpty()) {
+                throw new ConfigurationException("O catálogo de idioma " + file.getName() + " está vazio.");
+            }
+            return yaml;
+        } catch (IOException | org.bukkit.configuration.InvalidConfigurationException exception) {
+            throw new ConfigurationException("Catálogo de idioma inválido: " + file.getName(), exception);
+        }
+    }
+
+    static void applyFallback(YamlConfiguration candidate, YamlConfiguration fallback) {
+        Set<String> missing = new java.util.TreeSet<>(fallback.getKeys(true));
+        missing.removeAll(candidate.getKeys(true));
+        for (String key : missing) {
+            if (!fallback.isConfigurationSection(key)) {
+                candidate.set(key, fallback.get(key));
+            }
+        }
     }
 }

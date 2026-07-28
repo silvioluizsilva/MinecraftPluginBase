@@ -38,6 +38,8 @@ O usuário de execução recebe somente `SELECT`, `INSERT`, `UPDATE`, `DELETE`, 
 
 Nunca publique o `config.yml` gerado no servidor com uma senha real. Prefira um segredo exclusivo e conexão TLS validada em produção.
 
+Consulte [a estratégia de segredos e TLS MySQL](docs/mysql-security.md) antes de habilitar o banco em produção.
+
 ### Migrações
 
 O arquivo `sql/migrations.list` é o catálogo explícito e ordenado. Cada script segue o padrão `NNN_descricao.sql` e deve ser idempotente. O executor:
@@ -233,7 +235,7 @@ O namespace reduz conflitos e impede referências cruzadas acidentais nas migra�
 - testes do limite de duas transações e da liberação idempotente das vagas;
 - consumidores não podem executar `commit`, `rollback`, `setAutoCommit`, `close` ou `unwrap` na conexão gerenciada;
 - contrato da API `1.1` protegido por reflexão nos testes;
-- inspeção automatizada do JAR disponível em `scripts/verify-jar.ps1`.
+- inspeção portátil do JAR executada automaticamente na fase `verify`; o script PowerShell permanece apenas como opção manual.
 
 Por segurança, o endereço permanece limitado a `127.0.0.1`, `::1` ou `localhost`. A ativação exige ao menos uma origem exata e um hash SHA-256 válido. Curingas de origem e tokens em texto puro são rejeitados.
 
