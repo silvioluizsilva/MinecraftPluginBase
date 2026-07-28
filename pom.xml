@@ -33,7 +33,7 @@
     <properties>
         <paper.version>26.2.build.65-beta</paper.version>
         <hikaricp.version>7.0.2</hikaricp.version>
-        <mysql.version>9.4.0</mysql.version>
+        <mysql.version>9.7.0</mysql.version>
         <slf4j.version>2.0.17</slf4j.version>
         <junit.version>5.13.4</junit.version>
         <mockito.version>5.20.0</mockito.version>
